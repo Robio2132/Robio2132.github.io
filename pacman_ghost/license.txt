@@ -1,0 +1,11 @@
+Model Information:
+* title:	Pacman Ghost
+* source:	https://sketchfab.com/3d-models/pacman-ghost-a1c987366ca54b098ca24adfe374aa44
+* author:	elina_ailurophile (https://sketchfab.com/elina_ailurophile)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Pacman Ghost" (https://sketchfab.com/3d-models/pacman-ghost-a1c987366ca54b098ca24adfe374aa44) by elina_ailurophile (https://sketchfab.com/elina_ailurophile) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
