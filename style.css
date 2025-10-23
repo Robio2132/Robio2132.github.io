@@ -1,21 +1,24 @@
 :root {
   --nav-h: 64px;
+  --accent: #ff6b6b;
 }
 
-/* GLOBAL */
+/* === GLOBAL RESET & BASE === */
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html {
   scroll-behavior: smooth;
   scroll-snap-type: y mandatory;
+  font-size: 100%; /* ✅ ensures GitHub Pages doesn’t shrink text */
 }
 body {
   font-family: 'Poppins', Arial, sans-serif;
   background: #f9f9fb;
   color: #333;
   overflow-x: hidden;
+  min-height: 100vh;
 }
 
-/* NAVBAR */
+/* === NAVBAR === */
 header {
   position: sticky;
   top: 0;
@@ -24,19 +27,34 @@ header {
   box-shadow: 0 2px 10px rgba(0,0,0,.08);
 }
 nav {
-  max-width: 1100px;
+  max-width: 1200px;
   margin: auto;
   padding: .75rem 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-nav h1 { font-size: 1rem; font-weight: 700; color: #ff6b6b; }
-nav ul { list-style: none; display: flex; gap: 1.25rem; flex-wrap: wrap; }
-nav a { text-decoration: none; color: #333; font-weight: 500; transition: color .2s, transform .2s; }
-nav a:hover { color: #ff6b6b; transform: translateY(-2px); }
+nav h1 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--accent);
+  white-space: nowrap;
+}
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+}
+nav a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  transition: color .2s, transform .2s;
+}
+nav a:hover { color: var(--accent); transform: translateY(-2px); }
 
-/* SECTIONS */
+/* === SECTION BASE === */
 .page {
   min-height: 100vh;
   scroll-snap-align: start;
@@ -44,7 +62,7 @@ nav a:hover { color: #ff6b6b; transform: translateY(-2px); }
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding-bottom: 5rem; /* space for footer */
+  padding: 4rem 1rem 6rem;
   opacity: 0;
   transform: translateY(40px);
   transition: opacity 1s ease, transform 1s ease;
@@ -54,86 +72,110 @@ nav a:hover { color: #ff6b6b; transform: translateY(-2px); }
   transform: translateY(0);
 }
 
-/* HERO */
+/* === HERO SECTION === */
 #hero {
-  background: linear-gradient(135deg,#ffecec,#fff);
-  border-bottom: 2px solid #ff6b6b;
+  background: linear-gradient(135deg, #ffecec, #fff);
+  border-bottom: 2px solid var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 6rem 1rem 4rem;
 }
 .hero-container {
-  max-width: 1100px;
-  margin: auto;
+  max-width: 1400px; /* ✅ gives more breathing room on large screens */
+  width: 90%;
+  margin: 0 auto;
   display: grid;
-  grid-template-columns: 1fr 1fr; /* photo | text */
-  gap: 3rem;
+  grid-template-columns: 1fr 1fr;
   align-items: center;
   justify-items: center;
-  padding: 2rem 1rem;
+  gap: 3rem;
 }
+
+/* LEFT SIDE: PHOTO */
 .hero-visuals {
-  text-align: right;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .hero-photo {
-  width: clamp(260px, 30vw, 340px);
-  height: auto;
+  width: clamp(300px, 32vw, 400px);
   border-radius: 16px;
-  box-shadow: 0 4px 15px rgba(0,0,0,.12);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
 }
+
+/* RIGHT SIDE: TEXT + PACMAN */
 .hero-text {
-  text-align: left;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 1rem;
+  align-items: flex-start;
+  text-align: left;
+  gap: 0.4rem;          /* ✅ tighter spacing between lines */
+  margin-top: -1rem;    /* ✅ shifts text up closer to Pac-Man */
 }
+
+/* PACMAN MODEL CONTAINER */
+#container3D {
+  width: clamp(320px, 42vw, 480px);
+  height: clamp(260px, 36vw, 420px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: visible;
+  background: transparent;
+  position: relative;
+  margin-bottom: 0.4rem; /* ✅ reduces gap below Pac-Man */
+}
+
+#container3D canvas {
+  width: 115%;            /* ✅ extra breathing room */
+  height: 115%;
+  transform: translateX(-6%); /* ✅ ensures Pac-Man not cut off */
+}
+
+/* TEXT STYLING */
 .hero-text h2 {
-  font-size: 2.2rem;
-  margin-bottom: .25rem;
-  color: #ff6b6b;
+  font-size: clamp(2.2rem, 4vw, 3rem);
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 0.2rem;
+}
+.hero-text p {
+  font-size: clamp(1rem, 1.3vw, 1.2rem);
+  line-height: 1.6;
+  margin-top: 0;
+  margin-bottom: 0.3rem;
+  max-width: 550px;
+  color: #333;
 }
 .cta-btn {
   display: inline-block;
-  background: #ff6b6b;
+  background: var(--accent);
   color: #fff;
-  padding: .8rem 1.5rem;
+  padding: 0.8rem 1.6rem;
   border-radius: 10px;
   text-decoration: none;
   font-weight: 600;
-  transition: all .3s;
+  transition: background 0.3s ease, transform 0.2s ease;
 }
-.cta-btn:hover { background: #ff4a4a; transform: translateY(-2px); }
-
-/* PACMAN MODEL */
-#container3D {
-  width: 280px;
-  height: 280px;
-  border-radius: 12px;
-  overflow: hidden;
-  background: transparent;
-  margin-bottom: 1rem;
-}
-#container3D canvas {
-  width: 100% !important;
-  height: 100% !important;
-  display: block;
-}
-@media (max-width: 900px) {
-  .hero-container { grid-template-columns: 1fr; text-align: center; }
-  .hero-photo { margin: 0 auto; width: 70%; }
-  .hero-text { text-align: center; align-items: center; }
-  #container3D { width: 220px; height: 220px; }
+.cta-btn:hover {
+  background: #ff4a4a;
+  transform: translateY(-2px);
 }
 
-/* ABOUT */
+/* === ABOUT SECTION === */
 .about-container {
   max-width: 1000px;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1.8rem;
   align-items: center;
+  text-align: left;
 }
 .about-photo {
   width: clamp(240px, 35vw, 400px);
-  height: auto;
   border-radius: 14px;
   box-shadow: 0 4px 12px rgba(0,0,0,.12);
 }
@@ -143,8 +185,8 @@ nav a:hover { color: #ff6b6b; transform: translateY(-2px); }
   line-height: 1.7;
 }
 
-/* PROJECTS */
-#projects h2 { text-align: center; margin-bottom: 1rem; }
+/* === PROJECTS === */
+#projects h2 { text-align: center; margin-bottom: 1rem; color: var(--accent); }
 #projects article {
   background: #fff;
   padding: 1.5rem;
@@ -160,7 +202,8 @@ nav a:hover { color: #ff6b6b; transform: translateY(-2px); }
   box-shadow: 0 6px 16px rgba(0,0,0,.12);
 }
 
-/* SKILLS */
+/* === SKILLS === */
+#skills h2 { color: var(--accent); margin-bottom: 1rem; }
 #skills ul {
   list-style: none;
   display: flex;
@@ -170,16 +213,16 @@ nav a:hover { color: #ff6b6b; transform: translateY(-2px); }
   max-width: 800px;
 }
 #skills li {
-  background: #ff6b6b;
+  background: var(--accent);
   color: white;
   border-radius: 999px;
   padding: .6rem 1rem;
   font-weight: 600;
 }
 
-/* GAME BREAK */
+/* === GAME BREAK === */
 #game-break { background: #fff; }
-#game-break h2, #game-break p { text-align: center; }
+#game-break h2, #game-break p { text-align: center; color: var(--accent); }
 .game-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -195,7 +238,7 @@ nav a:hover { color: #ff6b6b; transform: translateY(-2px); }
   text-align: center;
 }
 .play-btn {
-  background: #ff6b6b;
+  background: var(--accent);
   color: #fff;
   border: none;
   padding: .6rem 1.2rem;
@@ -206,12 +249,12 @@ nav a:hover { color: #ff6b6b; transform: translateY(-2px); }
 }
 .play-btn:hover { transform: scale(1.05); }
 
-/* FOOTER */
+/* === FOOTER === */
 footer {
   position: fixed;
   bottom: 0;
   width: 100%;
-  background: #ff6b6b;
+  background: var(--accent);
   color: white;
   text-align: center;
   padding: .7rem;
@@ -221,7 +264,7 @@ footer {
   box-shadow: 0 -2px 10px rgba(0,0,0,0.2);
 }
 
-/* GAME OVERLAY */
+/* === GAME OVERLAY === */
 .game-overlay {
   position: fixed;
   inset: 0;
@@ -232,7 +275,6 @@ footer {
   z-index: 3000;
 }
 .game-overlay.active { display: flex; }
-
 .game-content {
   position: relative;
   width: 90%;
@@ -243,16 +285,12 @@ footer {
   overflow: hidden;
   box-shadow: 0 0 25px rgba(255,107,107,0.4);
 }
-#gameFrame {
-  width: 100%;
-  height: 100%;
-  border: none;
-}
+#gameFrame { width: 100%; height: 100%; border: none; }
 .close-btn {
   position: absolute;
   top: 10px;
   right: 15px;
-  background: #ff6b6b;
+  background: var(--accent);
   color: #fff;
   border: none;
   border-radius: 5px;
@@ -262,3 +300,21 @@ footer {
   z-index: 10;
 }
 .close-btn:hover { background: #ff4040; }
+
+/* === RESPONSIVE === */
+@media (max-width: 900px) {
+  .hero-container {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+  .hero-text {
+    align-items: center;
+    margin-top: 0;
+  }
+  .hero-photo { margin: 0 auto; width: 70%; }
+  #container3D { width: 240px; height: 240px; }
+  .about-container {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+}
