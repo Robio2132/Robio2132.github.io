@@ -68,7 +68,7 @@
           const d = r / Math.tan(fov / 2);
 
           // Give more breathing room horizontally
-          camera.position.set(0.2, 0, d * 1.8); // was (0, 0, d * 1.25)
+          camera.position.set(0, 0, d * 1.8); // was (0, 0, d * 1.25)
           camera.lookAt(0, 0, 0);
         }
         updateCameraToFit();
