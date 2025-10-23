@@ -1,3 +1,10 @@
+/* ============================================================================
+Name: Robbie Bennett
+Class: CS321 - Software Engineering
+File: styles.css
+Purpose: Provides layout and styling for the Space Invaders mini-game.
+============================================================================ */
+
 body {
   background: #000;
   margin: 0;
@@ -22,7 +29,7 @@ body {
   grid-template-rows: repeat(15, 1fr);
   width: 90vmin;
   height: 90vmin;
-  background-color: #111;
+  background: #111;
   border: 2px solid #444;
 }
 
@@ -33,32 +40,14 @@ body {
   background-position: center;
 }
 
-/* Image-based Invaders */
-.invader {
-  background-image: url('photos/villain.png'); /* or 'villain.png' if same folder */
-  background-size: cover;
-  background-position: center;
-  border-radius: 4px;
-  background-repeat: no-repeat;
-}
+/* Invaders, Shooter, and Laser */
+.invader { background: url("photos/villain.png") center/cover no-repeat; border-radius: 4px; }
+.shooter { background: red; }
+.laser { background: orange; }
+.boom { background: yellow; }
 
-/* Shooter */
-.shooter {
-  background-color: red;
-}
-
-/* Laser */
-.laser {
-  background-color: orange;
-}
-
-/* Explosion */
-.boom {
-  background-color: yellow;
-}
-
-/* Start Over button */
-.start-over {
+/* Buttons */
+.start-over, .exit-btn {
   margin-top: 20px;
   padding: 10px 20px;
   border-radius: 8px;
@@ -70,12 +59,10 @@ body {
   transition: background-color 0.2s, transform 0.1s;
   z-index: 100;
 }
-.start-over:hover {
+.start-over:hover, .exit-btn:hover {
   background-color: #ff4a4a;
   transform: scale(1.05);
 }
 
-/* Blank screen on Game Over */
-.blank-screen {
-  background: black !important;
-}
+/* Blank Screen State */
+.blank-screen { background: black !important; }

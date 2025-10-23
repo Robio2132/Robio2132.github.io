@@ -1,9 +1,17 @@
+/* ============================================================================
+Name: Robbie Bennett
+Class: CS321 - Software Engineering
+File: flappybird.css
+Purpose: Provides the Flappy Bird game’s simple centered layout and style.
+============================================================================ */
+
 body {
-    font-family:'Courier New', Courier, monospace;
-    text-align: center;
+  font-family: 'Courier New', Courier, monospace;
+  text-align: center;
 }
 
 #board {
-    background-image: url("./flappybirdbg.png")
+  background-image: url("Photos/flappybirdbg.png");
+  background-size: cover;
+  background-position: center;
 }
-

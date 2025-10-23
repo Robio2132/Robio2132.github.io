@@ -1,3 +1,10 @@
+/* ============================================================================
+   Name: Robbie Bennett
+   Class: CS321 - Software Engineering
+   File: script.js
+   Purpose: Controls portfolio interactivity — fade-in animations and game overlay logic.
+   ============================================================================ */
+
 // ===== FADE-IN / SNAP SCROLL =====
 document.addEventListener("DOMContentLoaded", () => {
   const pages = document.querySelectorAll(".page");
@@ -36,6 +43,7 @@ function closeOverlay() {
   frame.src = "about:blank";
   document.body.style.overflow = "auto";
 }
+
 closeBtn.addEventListener("click", closeOverlay);
 overlay.addEventListener("click", (e) => {
   if (e.target === overlay) closeOverlay();

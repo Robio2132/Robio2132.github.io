@@ -1,10 +1,16 @@
-// Pac-Man Ghost 3D (fits fully inside the 250x250 box)
+/* ============================================================================
+   Name: Robbie Bennett
+   Class: CS321 - Software Engineering
+   File: panda.js (originally meant to be a panda image, but got changed to pacman last second.)
+   Purpose: Loads and renders a rotating 3D Pac-Man ghost model using Three.js.
+   ============================================================================ */
 
+// ===== 3D PAC-MAN GHOST INITIALIZATION =====
 (function () {
-  // Load Three.js (no modules)
   const threeSrc = "https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js";
-  const gltfSrc  = "https://cdn.jsdelivr.net/npm/three@0.128/examples/js/loaders/GLTFLoader.js";
+  const gltfSrc = "https://cdn.jsdelivr.net/npm/three@0.128/examples/js/loaders/GLTFLoader.js";
 
+  // ===== SCRIPT LOADER UTILITY =====
   function loadScript(src) {
     return new Promise((resolve, reject) => {
       const s = document.createElement("script");
@@ -15,27 +21,33 @@
     });
   }
 
+  // ===== MAIN INITIALIZATION =====
   (async () => {
     const container = document.getElementById("container3D");
-    if (!container) { console.error("container3D not found"); return; }
+    if (!container) {
+      console.error("container3D not found");
+      return;
+    }
 
+    // Load Three.js and GLTFLoader dynamically
     await loadScript(threeSrc);
     await loadScript(gltfSrc);
 
-    const scene   = new THREE.Scene();
-    const camera  = new THREE.PerspectiveCamera(45, 1, 0.01, 1000);
+    // ===== SCENE, CAMERA, RENDERER SETUP =====
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(45, 1, 0.01, 1000);
     const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
     renderer.setPixelRatio(window.devicePixelRatio || 1);
     renderer.setSize(container.clientWidth, container.clientHeight);
     container.appendChild(renderer.domElement);
 
-    // Lights
-    const dir = new THREE.DirectionalLight(0xffffff, 1.2);
-    dir.position.set(3, 5, 5);
-    scene.add(dir);
+    // ===== LIGHTING =====
+    const dirLight = new THREE.DirectionalLight(0xffffff, 1.2);
+    dirLight.position.set(3, 5, 5);
+    scene.add(dirLight);
     scene.add(new THREE.AmbientLight(0xffffff, 0.6));
 
-    // Load model
+    // ===== MODEL LOADING =====
     const loader = new THREE.GLTFLoader();
     loader.load(
       "pacman_ghost/scene.gltf",
@@ -43,50 +55,43 @@
         const ghost = gltf.scene;
         scene.add(ghost);
 
-        // --- Center & fit to view ---
+        // ===== CENTER AND SCALE MODEL =====
         const box = new THREE.Box3().setFromObject(ghost);
         const sphere = box.getBoundingSphere(new THREE.Sphere());
-        // Move model so its center is at the origin
         ghost.position.sub(sphere.center);
 
-        // Optionally normalize scale (keeps similar size regardless of model units)
-        const targetRadius = 1.0; // “desired” radius in scene units
+        const targetRadius = 1.0;
         const scale = targetRadius / sphere.radius;
         ghost.scale.setScalar(scale);
 
-        // Compute camera distance so the whole sphere fits vertically
+        // ===== CAMERA POSITIONING =====
         function updateCameraToFit() {
-          const w = container.clientWidth  || 250;
+          const w = container.clientWidth || 250;
           const h = container.clientHeight || 250;
           renderer.setSize(w, h);
           camera.aspect = w / h;
           camera.updateProjectionMatrix();
 
-          // d >= r / tan(fov/2)
           const fov = THREE.MathUtils.degToRad(camera.fov);
-          const r = targetRadius;
-          const d = r / Math.tan(fov / 2);
-
-          // Give more breathing room horizontally
-          camera.position.set(0, 0, d * 1.8); // was (0, 0, d * 1.25)
+          const d = targetRadius / Math.tan(fov / 2);
+          camera.position.set(0, 0, d * 1.8);
           camera.lookAt(0, 0, 0);
         }
+
         updateCameraToFit();
         window.addEventListener("resize", updateCameraToFit);
 
-        // Animate
+        // ===== ANIMATION LOOP =====
         function animate() {
           requestAnimationFrame(animate);
           ghost.rotation.y += 0.01;
-          ghost.position.y = Math.sin(Date.now() * 0.002) * 0.08; // gentle hover
+          ghost.position.y = Math.sin(Date.now() * 0.002) * 0.08;
           renderer.render(scene, camera);
         }
+
         animate();
       },
-      (xhr) => {
-        // progress (optional)
-        // console.log(`Loading: ${(xhr.loaded / xhr.total * 100).toFixed(1)}%`);
-      },
+      null, 
       (err) => console.error("Ghost load error:", err)
     );
   })();

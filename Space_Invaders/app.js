@@ -1,170 +1,140 @@
-const grid = document.querySelector('.grid');
-const resultsDisplay = document.querySelector('.results');
-const startOverBtn = document.getElementById('startOver');
-let currentShooterIndex = 202;
-const width = 15;
-let invadersID;
-let goingRight = true;
-let direction = 1;
-let aliensRemoved = [];
-let results = 0;
-let gameRunning = true;
+/* ============================================================================
+Name: Robbie Bennett
+Class: CS321 - Software Engineering
+File: app.js
+Purpose: Implements classic Space Invaders gameplay logic, rendering, and controls.
+============================================================================ */
 
-// Create grid
+// ===== DOM Elements =====
+const grid = document.querySelector(".grid");
+const resultsDisplay = document.querySelector(".results");
+const startOverBtn = document.getElementById("startOver");
+const exitBtn = document.getElementById("exitBtn");
+
+// ===== Game Setup =====
+const width = 15;
+let currentShooterIndex = 202;
+let invadersID, goingRight = true, direction = 1;
+let aliensRemoved = [], alienInvaders = [];
+let results = 0, gameRunning = true;
+
+// ===== Create Grid =====
 for (let i = 0; i < 225; i++) {
-  const square = document.createElement('div');
+  const square = document.createElement("div");
   grid.appendChild(square);
 }
-const squares = Array.from(document.querySelectorAll('.grid div'));
+const squares = Array.from(document.querySelectorAll(".grid div"));
 
-// ===== HORIZONTAL INVADERS (FUNCTION FOR WAVES) =====
-let alienInvaders = [];
-const startRow = 0;
-const numRows = 3;
-const numCols = 10;
-
+// ===== Create Alien Wave =====
 function createWave() {
   alienInvaders = [];
-  for (let r = 0; r < numRows; r++) {
-    for (let c = 0; c < numCols; c++) {
-      alienInvaders.push(startRow * width + r * width + c);
-    }
+  const rows = 3, cols = 10, startRow = 0;
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) alienInvaders.push(startRow * width + r * width + c);
   }
   aliensRemoved = [];
   draw();
 }
 
+// ===== Draw / Remove Invaders =====
 function draw() {
   alienInvaders.forEach((index, i) => {
-    if (!aliensRemoved.includes(i) && squares[index]) {
-      squares[index].classList.add('invader');
-    }
+    if (!aliensRemoved.includes(i) && squares[index])
+      squares[index].classList.add("invader");
   });
 }
-
 function remove() {
-  alienInvaders.forEach(index => {
-    if (squares[index]) squares[index].classList.remove('invader');
-  });
+  alienInvaders.forEach(i => squares[i]?.classList.remove("invader"));
 }
 
-// initial wave
-createWave();
-
-// ===== SHOOTER =====
-squares[currentShooterIndex].classList.add('shooter');
+// ===== Shooter Controls =====
+squares[currentShooterIndex].classList.add("shooter");
 function moveShooter(e) {
-  squares[currentShooterIndex].classList.remove('shooter');
-  if (e.key === 'ArrowLeft' && currentShooterIndex % width !== 0) currentShooterIndex -= 1;
-  if (e.key === 'ArrowRight' && currentShooterIndex % width < width - 1) currentShooterIndex += 1;
-  squares[currentShooterIndex].classList.add('shooter');
+  squares[currentShooterIndex].classList.remove("shooter");
+  if (e.key === "ArrowLeft" && currentShooterIndex % width !== 0) currentShooterIndex--;
+  if (e.key === "ArrowRight" && currentShooterIndex % width < width - 1) currentShooterIndex++;
+  squares[currentShooterIndex].classList.add("shooter");
 }
-document.addEventListener('keydown', moveShooter);
+document.addEventListener("keydown", moveShooter);
 
-// ===== MOVE INVADERS (SLOWER SPEED) =====
+// ===== Move Invaders =====
 function moveInvaders() {
   if (!gameRunning) return;
-
   const leftEdge = alienInvaders.some(i => i % width === 0);
   const rightEdge = alienInvaders.some(i => i % width === width - 1);
 
   remove();
 
   if (rightEdge && goingRight) {
-    for (let i = 0; i < alienInvaders.length; i++) {
-      alienInvaders[i] += width;
-    }
-    direction = -1;
-    goingRight = false;
+    alienInvaders = alienInvaders.map(i => i + width);
+    direction = -1; goingRight = false;
   } else if (leftEdge && !goingRight) {
-    for (let i = 0; i < alienInvaders.length; i++) {
-      alienInvaders[i] += width;
-    }
-    direction = 1;
-    goingRight = true;
+    alienInvaders = alienInvaders.map(i => i + width);
+    direction = 1; goingRight = true;
   }
 
-  for (let i = 0; i < alienInvaders.length; i++) {
-    alienInvaders[i] += direction;
-  }
-
+  alienInvaders = alienInvaders.map(i => i + direction);
   draw();
 
-  // === GAME OVER ===
+  // Game Over / Bottom Reached
   if (
-    squares[currentShooterIndex].classList.contains('invader') &&
-    squares[currentShooterIndex].classList.contains('shooter')
-  ) {
-    endGame();
-  }
+    squares[currentShooterIndex].classList.contains("invader") &&
+    squares[currentShooterIndex].classList.contains("shooter")
+  ) endGame();
+  if (alienInvaders.some(i => i >= squares.length - width)) endGame();
 
-  // === INVADER REACHES BOTTOM ===
-  for (let i = 0; i < alienInvaders.length; i++) {
-    if (alienInvaders[i] >= squares.length - width) {
-      endGame();
-    }
-  }
-
-  // === NEW WAVE ===
+  // New Wave
   if (aliensRemoved.length === alienInvaders.length) {
     resultsDisplay.innerHTML = `Score: ${results}`;
     createWave();
   }
 }
-invadersID = setInterval(moveInvaders, 700); // slower movement
+invadersID = setInterval(moveInvaders, 700);
 
-// ===== SHOOT FUNCTION =====
+// ===== Shoot Function =====
 function shoot(e) {
-  if (!gameRunning) return;
+  if (!gameRunning || e.key !== "ArrowUp") return;
 
-  let laserID;
   let currentLaserIndex = currentShooterIndex;
-
-  function moveLaser() {
-    squares[currentLaserIndex].classList.remove('laser');
+  const laserID = setInterval(() => {
+    squares[currentLaserIndex]?.classList.remove("laser");
     currentLaserIndex -= width;
-    if (currentLaserIndex < 0) {
-      clearInterval(laserID);
-      return;
-    }
-    squares[currentLaserIndex].classList.add('laser');
+    if (currentLaserIndex < 0) return clearInterval(laserID);
 
+    squares[currentLaserIndex].classList.add("laser");
     const hitIndex = alienInvaders.indexOf(currentLaserIndex);
     if (hitIndex !== -1 && !aliensRemoved.includes(hitIndex)) {
-      squares[currentLaserIndex].classList.remove('laser', 'invader');
-      squares[currentLaserIndex].classList.add('boom');
-      setTimeout(() => squares[currentLaserIndex].classList.remove('boom'), 300);
+      squares[currentLaserIndex].classList.remove("laser", "invader");
+      squares[currentLaserIndex].classList.add("boom");
+      setTimeout(() => squares[currentLaserIndex]?.classList.remove("boom"), 300);
       clearInterval(laserID);
       aliensRemoved.push(hitIndex);
       results++;
       resultsDisplay.innerHTML = `Score: ${results}`;
     }
-  }
-
-  if (e.key === 'ArrowUp') laserID = setInterval(moveLaser, 100);
+  }, 100);
 }
-document.addEventListener('keydown', shoot);
+document.addEventListener("keydown", shoot);
 
-// ===== END GAME =====
+// ===== End Game =====
 function endGame() {
   gameRunning = false;
   clearInterval(invadersID);
-  resultsDisplay.innerHTML = 'GAME OVER';
-  grid.innerHTML = ''; // clear all squares
-  document.body.classList.add('blank-screen');
-  startOverBtn.style.display = 'block';
+  resultsDisplay.innerHTML = "GAME OVER";
+  grid.innerHTML = "";
+  document.body.classList.add("blank-screen");
+  startOverBtn.style.display = "block";
 }
 
-// ===== START OVER =====
-startOverBtn.addEventListener('click', () => {
-  window.location.reload();
-});
-
-const exitBtn = document.getElementById('exitBtn');
-exitBtn.addEventListener('click', () => {
+// ===== Buttons =====
+startOverBtn.addEventListener("click", () => window.location.reload());
+exitBtn.addEventListener("click", () => {
   gameRunning = false;
   clearInterval(invadersID);
-  document.body.classList.add('blank-screen');
-  grid.innerHTML = '';
-  resultsDisplay.innerHTML = 'Game exited.';
+  grid.innerHTML = "";
+  resultsDisplay.innerHTML = "Game exited.";
+  document.body.classList.add("blank-screen");
 });
+
+// ===== Initialize =====
+createWave();
