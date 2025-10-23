@@ -70,7 +70,9 @@ function update() {
   requestAnimationFrame(update);
   if (gameOver) return;
 
+  
   // Background
+  context.clearRect(0, 0, boardWidth, boardHeight); // clear the previous frame.
   context.drawImage(backgroundIMG, 0, 0, boardWidth, boardHeight);
 
   // Bird Physics
@@ -98,7 +100,7 @@ function update() {
   pipeArray = pipeArray.filter((p) => p.x >= -pipeWidth);
 
   // Score Display
-  context.fillStyle = "white";
+  context.fillStyle = "red";
   context.font = "45px sans-serif";
   context.fillText(score, 5, 45);
   if (gameOver) context.fillText("Game Over", 5, 90);

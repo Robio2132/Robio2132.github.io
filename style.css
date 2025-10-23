@@ -428,3 +428,20 @@ footer {
     text-align: center;
   }
 }
+
+/* === Section Title Color Overrides === */
+#about h2 {
+  color: #0077ff; /* Blue for About */
+}
+
+#projects h2 {
+  color: #00b36b; /* Green for Projects */
+}
+
+#skills h2 {
+  color: #9b59b6; /* Purple for Skills */
+}
+
+#game-break h2 {
+  color: #ff8c00; /* Orange for Game Break */
+}

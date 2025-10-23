@@ -126,15 +126,5 @@ function endGame() {
   startOverBtn.style.display = "block";
 }
 
-// ===== Buttons =====
-startOverBtn.addEventListener("click", () => window.location.reload());
-exitBtn.addEventListener("click", () => {
-  gameRunning = false;
-  clearInterval(invadersID);
-  grid.innerHTML = "";
-  resultsDisplay.innerHTML = "Game exited.";
-  document.body.classList.add("blank-screen");
-});
-
 // ===== Initialize =====
 createWave();
