@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
   <!-- Styles -->
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="./style.css" />
 
   <style>
     /* Center hero content vertically and align ghost above text */
@@ -59,28 +59,27 @@
     </nav>
   </header>
 
-<!-- ===== HERO SECTION ===== -->
-<section id="hero" class="page">
-  <div class="hero-container">
+  <!-- ===== HERO SECTION ===== -->
+  <section id="hero" class="page">
+    <div class="hero-container">
 
-    <!-- LEFT: PHOTO -->
-    <div class="hero-visuals">
-      <img src="photos/Robbie_Photo.jpg" alt="Robbie Bennett" class="hero-photo" />
+      <!-- LEFT: PHOTO -->
+      <div class="hero-visuals">
+        <img src="./photos/Robbie_Photo.jpg" alt="Robbie Bennett" class="hero-photo" />
+      </div>
+
+      <!-- RIGHT: PAC-MAN + TEXT -->
+      <div class="hero-text">
+        <div id="container3D" class="pacman-3d"></div>
+
+        <h2>Robbie Bennett</h2>
+        <p>Computer Science &amp; English Student | Aspiring IT, Security, and Software Specialist</p>
+        <p>Welcome to my portfolio!</p>
+        <a href="#projects" class="cta-btn">See My Work</a>
+      </div>
+
     </div>
-
-    <!-- RIGHT: PAC-MAN + TEXT -->
-    <div class="hero-text">
-      <!-- Pac-Man 3D appears ABOVE your name -->
-      <div id="container3D" class="pacman-3d"></div>
-
-      <h2>Robbie Bennett</h2>
-      <p>Computer Science &amp; English Student | Aspiring IT, Security, and Software Specialist</p>
-      <p>Welcome to my portfolio!</p>
-      <a href="#projects" class="cta-btn">See My Work</a>
-    </div>
-
-  </div>
-</section>
+  </section>
 
   <!-- ===== ABOUT ===== -->
   <section id="about" class="page">
@@ -89,7 +88,7 @@
         <h2>About Robbie</h2>
         <p>I am a student at Colby College, pursuing degrees in Computer Science and English. I enjoy building projects, learning new technologies, and working in collaborative environments.</p>
       </div>
-      <img src="photos/Colby_College.jpeg" alt="Colby College" class="about-photo" />
+      <img src="./photos/Colby_College.jpeg" alt="Colby College" class="about-photo" />
     </div>
   </section>
 
@@ -156,7 +155,7 @@
   </div>
 
   <!-- ===== SCRIPTS ===== -->
-  <script src="script.js"></script>
-  <script src="panda.js"></script>
+  <script src="./script.js"></script>
+  <script type="module" src="./panda.js"></script>
 </body>
 </html>
