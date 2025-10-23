@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Robbie Bennett | Portfolio</title>
 
   <!-- Google Fonts -->
@@ -12,10 +12,17 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
   <!-- Styles -->
-  <link rel="stylesheet" href="./style.css" />
+  <link rel="stylesheet" href="style.css">
 
   <style>
-    /* Center hero content vertically and align ghost above text */
+    /* Inline fallback styling — only applies briefly if CSS fails to load */
+    body {
+      font-family: "Poppins", sans-serif;
+      background-color: #f9f9fb;
+      margin: 0;
+      color: #333;
+    }
+
     .hero-container {
       display: flex;
       justify-content: center;
@@ -23,6 +30,7 @@
       flex-wrap: wrap;
       gap: 2rem;
       text-align: center;
+      padding: 3rem 1rem;
     }
 
     .hero-text {
@@ -62,22 +70,19 @@
   <!-- ===== HERO SECTION ===== -->
   <section id="hero" class="page">
     <div class="hero-container">
-
       <!-- LEFT: PHOTO -->
       <div class="hero-visuals">
-        <img src="./photos/Robbie_Photo.jpg" alt="Robbie Bennett" class="hero-photo" />
+        <img src="photos/Robbie_Photo.jpg" alt="Robbie Bennett" class="hero-photo" />
       </div>
 
       <!-- RIGHT: PAC-MAN + TEXT -->
       <div class="hero-text">
         <div id="container3D" class="pacman-3d"></div>
-
         <h2>Robbie Bennett</h2>
         <p>Computer Science &amp; English Student | Aspiring IT, Security, and Software Specialist</p>
         <p>Welcome to my portfolio!</p>
         <a href="#projects" class="cta-btn">See My Work</a>
       </div>
-
     </div>
   </section>
 
@@ -88,7 +93,7 @@
         <h2>About Robbie</h2>
         <p>I am a student at Colby College, pursuing degrees in Computer Science and English. I enjoy building projects, learning new technologies, and working in collaborative environments.</p>
       </div>
-      <img src="./photos/Colby_College.jpeg" alt="Colby College" class="about-photo" />
+      <img src="photos/Colby_College.jpeg" alt="Colby College" class="about-photo" />
     </div>
   </section>
 
@@ -124,12 +129,12 @@
     <div class="game-grid">
       <article class="game-card">
         <h3>Space Invaders</h3>
-        <button class="play-btn" data-url="./Space_Invaders/index.html">Play Now</button>
+        <button class="play-btn" data-url="Space_Invaders/index.html">Play Now</button>
       </article>
 
       <article class="game-card">
         <h3>Flappy Bird</h3>
-        <button class="play-btn" data-url="./Flappy_Bird/index.html">Play Now</button>
+        <button class="play-btn" data-url="Flappy_Bird/index.html">Play Now</button>
       </article>
     </div>
   </section>
@@ -155,7 +160,7 @@
   </div>
 
   <!-- ===== SCRIPTS ===== -->
-  <script src="./script.js"></script>
-  <script type="module" src="./panda.js"></script>
+  <script src="script.js"></script>
+  <script type="module" src="panda.js"></script>
 </body>
 </html>
