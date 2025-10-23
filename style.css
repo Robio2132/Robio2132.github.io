@@ -1,3 +1,11 @@
+/* === GitHub Pages full-width patch === */
+html, body, main, #app, #root, #___gatsby {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 auto !important;
+  overflow-x: hidden !important;
+}
+
 :root {
   --nav-h: 64px;
   --accent: #ff6b6b;
