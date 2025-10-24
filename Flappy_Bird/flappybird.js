@@ -50,7 +50,7 @@ window.onload = function () {
 
   // ===== Load Assets =====
   birdIMG = new Image();
-  birdIMG.src = "./Photos/protagonist.png";
+  birdIMG.src = "./Photos/protagonist_v2.png";
 
   topPipeIMG = new Image();
   topPipeIMG.src = "./Photos/toppipe.png";
